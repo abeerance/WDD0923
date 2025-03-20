@@ -18,6 +18,9 @@ function processData(data) {
         // aber TypeScript benötigt explizite Einengung
         return data.reduce((sum, current) => sum + current, 0);
     }
+    // if (typeof data === "object") {
+    //   return true;
+    // }
     // Dies sollte aufgrund der Typüberprüfung von TypeScript nie passieren,
     // aber wir fügen es der Vollständigkeit halber ein
     throw new Error("Nicht unterstützter Datentyp");
@@ -27,3 +30,4 @@ console.log(processData(10)); // 20
 console.log(processData("hallo")); // 5
 console.log(processData(true)); // false
 console.log(processData([1, 2, 3, 4])); // 10
+// console.log(processData({ id: 1 }));

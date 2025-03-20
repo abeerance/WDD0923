@@ -6,7 +6,7 @@ type Product = {
   price: number;
   category: string;
   inStock: boolean;
-  tags?: string[];
+  tags?: string[]; // the '?' tells typescript, that the tags are optional
 };
 
 // Erstelle ein Array von Produkten
@@ -50,6 +50,6 @@ function filterByCategory(products: Product[], category: string): Product[] {
 }
 
 // Teste die Funktion
-const elektronikProdukte = filterByCategory(products, "Elektronik");
+const elektronikProdukte = filterByCategory(products, "Wasser");
 console.log(elektronikProdukte);
 // Sollte die Laptop- und Kopfhörer-Objekte ausgeben
