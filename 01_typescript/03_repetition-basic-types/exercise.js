@@ -54,18 +54,21 @@ function isBookAvailable(library, bookTitle) {
 }
 console.log("Available status: ", isBookAvailable(imagineLibrary, "1984")); // Output: true
 console.log("Available status: ", isBookAvailable(imagineLibrary, "To Kill a Mockingbird")); // Output: false
-/*
-Create a type Team that represents a sports team. It should contain:
-
-    •	teamName (string)
-    •	members (array of objects): Each object should represent a team member and contain:
-    •	name (string)
-    •	position (string)
-    •	isActive (boolean)
-    •	addMember (function): A method that takes a new member (object) and adds it to the members array.
-    •	listActiveMembers (function): A method that returns an array of names of the active team members.
-
-Create an instance of Team and demonstrate adding a new member and listing all active members.
-
-Hint: Use TypeScript’s push method for arrays and filter for listing active members.
-*/
+const soccerTeam = {
+    teamName: "Wild Tigers",
+    members: [
+        { name: "Alice", position: "Forward", isActive: true },
+        { name: "Bob", position: "Goalkeeper", isActive: false },
+        { name: "Cathy", position: "Defender", isActive: false },
+        { name: "Dennis", position: "Midfield", isActive: true },
+    ],
+    addMember(member) {
+        this.members.push(member);
+    },
+    listActiveMembers() {
+        return this.members.filter((member) => member.isActive).map((member) => member.name);
+    },
+};
+console.log(`The team name is ${soccerTeam.teamName}`);
+soccerTeam.addMember({ name: "Elli", position: "Goalkeeper", isActive: true });
+console.log(soccerTeam.listActiveMembers()); // output: ["Alice", "Dennis", "Elli"]
