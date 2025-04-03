@@ -2,4 +2,4 @@
 function greet(name) {
     return `Hallo, ${name}!`;
 }
-console.log(greet("TypeScript"));
+console.log(greet("wdd 0923"));

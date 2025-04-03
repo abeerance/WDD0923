@@ -1,14 +1,5 @@
 "use strict";
 // Exercise 1 Solution
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var DaysOfWeek;
 (function (DaysOfWeek) {
     DaysOfWeek[DaysOfWeek["Monday"] = 0] = "Monday";
@@ -37,65 +28,121 @@ console.log("Day after Friday", DaysOfWeek[nextDay(DaysOfWeek.Friday)]); // Satu
 console.log("Day after Sunday", DaysOfWeek[nextDay(DaysOfWeek.Sunday)]); // Monday => DaysOfWeek[0]
 console.clear();
 // Exercise 2 Solution
-var ApiStatus;
-(function (ApiStatus) {
-    ApiStatus["Success"] = "SUCCESS";
-    ApiStatus["Error"] = "ERROR";
-    ApiStatus["Loading"] = "LOADING";
-    ApiStatus["Timeout"] = "TIMEOUT";
-})(ApiStatus || (ApiStatus = {}));
-function simulateApiCall(endpoint) {
-    console.log(`Calling API endpoint: ${endpoint}...`);
-    // Simulation of random response after a delay
-    return new Promise((resolve) => {
-        // Simluate random response after a delay
-        const delay = 1000 + Math.random() * 1000; // 1-2 seconds
-        setTimeout(() => {
-            // simulate random outcome (70% success rate)
-            const random = Math.random();
-            let result;
-            if (random < 0.7) {
-                result = ApiStatus.Success;
-            }
-            else if (random < 0.9) {
-                result = ApiStatus.Error;
-            }
-            else {
-                result = ApiStatus.Timeout;
-            }
-            // now we need to resolve the promise and give the resolving promise function our return
-            resolve(result);
-        }, delay);
-    });
+// enum ApiStatus {
+//   Success = "SUCCESS",
+//   Error = "ERROR",
+//   Loading = "LOADING",
+//   Timeout = "TIMEOUT",
+// }
+// function simulateApiCall(endpoint: string): Promise<ApiStatus> {
+//   console.log(`Calling API endpoint: ${endpoint}...`);
+//   // Simulation of random response after a delay
+//   return new Promise((resolve) => {
+//     // Simluate random response after a delay
+//     const delay = 1000 + Math.random() * 1000; // 1-2 seconds
+//     setTimeout(() => {
+//       // simulate random outcome (70% success rate)
+//       const random = Math.random();
+//       let result: ApiStatus;
+//       if (random < 0.7) {
+//         result = ApiStatus.Success;
+//       } else if (random < 0.9) {
+//         result = ApiStatus.Error;
+//       } else {
+//         result = ApiStatus.Timeout;
+//       }
+//       // now we need to resolve the promise and give the resolving promise function our return
+//       resolve(result);
+//     }, delay);
+//   });
+// }
+// function handleApiResponse(status: ApiStatus): void {
+//   console.log(`API returned status: ${status}`);
+//   switch (status) {
+//     case ApiStatus.Success:
+//       console.log("Data retrieved succesfully");
+//       break;
+//     case ApiStatus.Error:
+//       console.log("An error occured while fetching data");
+//       break;
+//     case ApiStatus.Timeout:
+//       console.log("Request timed out, please try again");
+//       break;
+//     default:
+//       console.log("Unkown status received");
+//   }
+// }
+// // Test the functions
+// async function testApiCalls() {
+//   // Promises are always async, they are NEVER synchronous calls
+//   // Mock several API calls
+//   for (let i = 0; i < 10; i++) {
+//     const endpoint = `/api/data/${i + 1}`;
+//     const status = await simulateApiCall(endpoint);
+//     handleApiResponse(status);
+//     console.log("---");
+//   }
+// }
+// testApiCalls();
+// console.clear();
+// Exercise 3 Solution
+var UserPermission;
+(function (UserPermission) {
+    UserPermission[UserPermission["None"] = 0] = "None";
+    UserPermission[UserPermission["Read"] = 1] = "Read";
+    UserPermission[UserPermission["Write"] = 2] = "Write";
+    UserPermission[UserPermission["Delete"] = 3] = "Delete";
+    UserPermission[UserPermission["Admin"] = 4] = "Admin";
+})(UserPermission || (UserPermission = {}));
+const users = [
+    { id: "u1", name: "Alice", permission: UserPermission.Admin },
+    { id: "u2", name: "Bob", permission: UserPermission.Write },
+    { id: "u3", name: "Catherine", permission: UserPermission.Read },
+    { id: "u4", name: "Dennis", permission: UserPermission.None },
+    { id: "u5", name: "Eloise", permission: UserPermission.Delete },
+];
+// Permission check functions
+function canReadData(user) {
+    return user.permission >= UserPermission.Read;
 }
-function handleApiResponse(status) {
-    console.log(`API returned status: ${status}`);
-    switch (status) {
-        case ApiStatus.Success:
-            console.log("Data retrieved succesfully");
-            break;
-        case ApiStatus.Error:
-            console.log("An error occured while fetching data");
-            break;
-        case ApiStatus.Timeout:
-            console.log("Request timed out, please try again");
-            break;
-        default:
-            console.log("Unkown status received");
+function canWriteData(user) {
+    return user.permission >= UserPermission.Write;
+}
+function canDeleteData(user) {
+    return user.permission >= UserPermission.Delete;
+}
+function isAdmin(user) {
+    return user.permission >= UserPermission.Admin;
+}
+function promoteUser(user) {
+    if (user.permission < UserPermission.Admin) {
+        return Object.assign(Object.assign({}, user), { permission: user.permission + 1 });
     }
+    return user; // when the user is already an admin, just return the user
+}
+function demoteUser(user) {
+    if (user.permission > UserPermission.None) {
+        return Object.assign(Object.assign({}, user), { permission: user.permission - 1 });
+    }
+    return user; // when the user has already the "None" permission, just return the user
 }
 // Test the functions
-function testApiCalls() {
-    return __awaiter(this, void 0, void 0, function* () {
-        // Promises are always async, they are NEVER synchronous calls
-        // Mock several API calls
-        for (let i = 0; i < 10; i++) {
-            const endpoint = `/api/data/${i + 1}`;
-            const status = yield simulateApiCall(endpoint);
-            handleApiResponse(status);
-            console.log("---");
-        }
-    });
+function displayUserPermissions(user) {
+    console.log(`\nUser ${user.name} (${UserPermission[user.permission]} permission)`);
+    console.log(`Can read: ${canReadData(user)}`);
+    console.log(`Can write: ${canWriteData(user)}`);
+    console.log(`Can delete: ${canDeleteData(user)}`);
+    console.log(`Is admin: ${isAdmin(user)}`);
 }
-testApiCalls();
-console.clear();
+// Test with different users
+users.forEach((user) => {
+    displayUserPermissions(user);
+    // Test promotion
+    const promotedUser = promoteUser(user);
+    if (promotedUser.permission !== user.permission) {
+        console.log(`\nAfter promotion:`);
+        console.log(`User ${promotedUser.name} now has ${UserPermission[promotedUser.permission]} permission`);
+        console.log(`Can read: ${canReadData(promotedUser)}`);
+        console.log(`Can write: ${canWriteData(promotedUser)}`);
+    }
+});

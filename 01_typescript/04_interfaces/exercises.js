@@ -49,4 +49,25 @@ const user2 = {
 };
 displayUserInfo(user1);
 displayUserInfo(user2);
-/* Exercise 03: Interface with methods */
+class BasicCalculator {
+    add(a, b) {
+        return a + b;
+    }
+    subtract(a, b) {
+        return a - b;
+    }
+    multiply(a, b) {
+        return a * b;
+    }
+    divide(a, b) {
+        if (b === 0) {
+            throw new Error("Division with 0 is not possible");
+        }
+        return a / b;
+    }
+}
+const calc = new BasicCalculator();
+console.log(calc.add(5, 3)); // 8
+console.log(calc.subtract(10, 4)); // 6
+console.log(calc.multiply(3, 4)); // 12
+console.log(calc.divide(10, 2)); // 5
