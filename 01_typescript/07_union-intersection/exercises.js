@@ -76,3 +76,47 @@ users.forEach((user) => {
     console.log(formatUserInfo(user));
     console.log("---");
 });
+// Function to describe the fields
+function describeField(field) {
+    var _a, _b;
+    // check if the field is required, and return (required)
+    const requiredText = field.required ? " (required)" : "";
+    switch (field.type) {
+        case "text":
+            return `Text field: ${field.label}${requiredText}\n` + `Placeholder: ${field.placeholder}`;
+        case "number":
+            return (`Number field: ${field.label}${requiredText}\n` +
+                `Min: ${(_a = field.min) !== null && _a !== void 0 ? _a : "Not set"}, Max: ${(_b = field.max) !== null && _b !== void 0 ? _b : "Not set"}`);
+        case "checkbox":
+            return (`Checkbox field: ${field.label}${requiredText}\n` +
+                `Default value: ${field.defaultChecked ? "checked" : "not checked"}`);
+    }
+}
+const fields = [
+    {
+        name: "username",
+        label: "Username",
+        required: true,
+        type: "text",
+        placeholder: "Enter your username",
+    },
+    {
+        name: "age",
+        label: "Age",
+        required: false,
+        type: "number",
+        min: 18,
+        max: 100,
+    },
+    {
+        name: "terms",
+        label: "Accept terms",
+        required: true,
+        type: "checkbox",
+        defaultChecked: false,
+    },
+];
+fields.forEach((field) => {
+    console.log(describeField(field));
+    console.log("---");
+});

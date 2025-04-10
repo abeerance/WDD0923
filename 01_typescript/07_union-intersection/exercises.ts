@@ -142,3 +142,90 @@ users.forEach((user) => {
   console.log(formatUserInfo(user));
   console.log("---");
 });
+
+// Solution Exercise 3
+
+// BaseField Type
+interface BaseField {
+  name: string;
+  label: string;
+  required: boolean;
+}
+
+// TextFieldProps
+interface TextFieldProps {
+  type: "text";
+  placeholder: string;
+}
+
+// NumberFieldProps
+interface NumberFieldProps {
+  type: "number";
+  min?: number;
+  max?: number;
+}
+
+// CheckboxFieldProps
+interface CheckboxFieldProps {
+  type: "checkbox";
+  defaultChecked: boolean;
+}
+
+// Intersection types to combine into full types that we need
+type TextField = BaseField & TextFieldProps; // Intersection type, here we combine the type from BaseFieldType and TextFieldProps, to make a new type that has all the type definitions of these two
+type NumberField = BaseField & NumberFieldProps;
+type CheckboxField = BaseField & CheckboxFieldProps;
+
+// Union Type fpr all FieldTypes
+type FormField = TextField | NumberField | CheckboxField;
+
+// Function to describe the fields
+function describeField(field: FormField): string {
+  // check if the field is required, and return (required)
+  const requiredText = field.required ? " (required)" : "";
+
+  switch (field.type) {
+    case "text":
+      return `Text field: ${field.label}${requiredText}\n` + `Placeholder: ${field.placeholder}`;
+    case "number":
+      return (
+        `Number field: ${field.label}${requiredText}\n` +
+        `Min: ${field.min ?? "Not set"}, Max: ${field.max ?? "Not set"}`
+      );
+    case "checkbox":
+      return (
+        `Checkbox field: ${field.label}${requiredText}\n` +
+        `Default value: ${field.defaultChecked ? "checked" : "not checked"}`
+      );
+  }
+}
+
+const fields: FormField[] = [
+  {
+    name: "username",
+    label: "Username",
+    required: true,
+    type: "text",
+    placeholder: "Enter your username",
+  },
+  {
+    name: "age",
+    label: "Age",
+    required: false,
+    type: "number",
+    min: 18,
+    max: 100,
+  },
+  {
+    name: "terms",
+    label: "Accept terms",
+    required: true,
+    type: "checkbox",
+    defaultChecked: false,
+  },
+];
+
+fields.forEach((field) => {
+  console.log(describeField(field));
+  console.log("---");
+});

@@ -1,37 +1,45 @@
-import { Button, ButtonTwo } from "@/components/ui/button/button";
-import { CardStrict, CardWithReactNode } from "@/components/ui/card/card";
+import { Button, ButtonReactNode } from "@/components/ui/button/button";
+import { Card, CardCombined, CardReactNode } from "@/components/ui/card/card";
+import { Text } from "@/components/ui/typography/text";
+import { Title } from "@/components/ui/typography/title";
 
 export default function Home() {
   return (
     <div className="h-full w-full flex flex-col justify-center items-center gap-2">
-      <p>This is the homepage</p>
-      <Button label="Hey button" />
-      <ButtonTwo>React</ButtonTwo>
-      <div className="flex gap-6 flex-wrap">
-        <CardStrict
-          title="Switzerland"
-          description="Visit the beautiful cities of Switzerland"
-          buttonLabel="Find out more"
-        />
-        <CardStrict
-          title="Germany"
-          description="Check out the best Doner Kebab"
-          buttonLabel="Find out more"
-        />
-        <CardStrict
-          title="Italy"
-          description="We got the best pasta in the world"
-          buttonLabel="Find out more"
-        />
-        <CardWithReactNode>
-          <Button label="This is weird" />
-          <h1>Im a bit different</h1>
-        </CardWithReactNode>
-        <CardWithReactNode>
-          <h1>This is super weird</h1>
-          <Button label="This is weird" />
-        </CardWithReactNode>
-      </div>
+      <Card
+        title="This is the card without ReactNode"
+        description="This is a click counter"
+        text="This is the without ReactNode Text"
+        minusButtonLabel="-"
+        additionButtonLabel="+"
+      />
+
+      <CardReactNode>
+        <Title>A simple click counter with ReactNode</Title>
+        <Title headingLevel={4}>This will display another Click counter card</Title>
+        <Text>Current count: 0</Text>
+        <div className="self-end flex gap-4">
+          <Button label="-" />
+          <ButtonReactNode>+</ButtonReactNode>
+        </div>
+        <button className="bg-red-500 text-white self-start p-2.5 rounded">
+          This is outside the div
+        </button>
+      </CardReactNode>
+
+      <CardCombined
+        title="This is the combined base Card"
+        description="This will be a simple counter in the future"
+        text="We are coming along with the React"
+      >
+        <div className="self-end flex gap-4">
+          <Button label="-" />
+          <ButtonReactNode>+</ButtonReactNode>
+        </div>
+        <button className="bg-red-500 text-white self-start p-2.5 rounded">
+          This is outside the div
+        </button>
+      </CardCombined>
     </div>
   );
 }
