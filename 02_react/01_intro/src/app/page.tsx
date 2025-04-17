@@ -5,6 +5,33 @@ import { Button, ButtonReactNode } from "@/components/ui/button/button";
 import { Card, CardCombined, CardReactNode } from "@/components/ui/card/card";
 import { Text } from "@/components/ui/typography/text";
 import { Title } from "@/components/ui/typography/title";
+import { TeamDisplay, TeamMember } from "@/feature/ team-display/team-display";
+
+const teamMembers: TeamMember[] = [
+  {
+    id: "1",
+    name: "Max Mustermann",
+    jobTitle: "Software Engineer",
+    avatUrl:
+      "https://plus.unsplash.com/premium_photo-1671656349218-5218444643d8?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YXZhdGFyfGVufDB8fDB8fHww",
+    showSocial: true,
+  },
+  {
+    id: "2",
+    name: "Lisa Lowe",
+    jobTitle: "Fullstack Engineer",
+    avatUrl:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXZhdGFyfGVufDB8fDB8fHww",
+    theme: "dark",
+  },
+  {
+    id: "3",
+    name: "John Doe",
+    jobTitle: "CEO",
+    avatUrl:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
+  },
+];
 
 export default function Home() {
   return (
@@ -31,7 +58,6 @@ export default function Home() {
           This is outside the div
         </button>
       </CardReactNode>
-
       <CardCombined
         title="This is the combined base Card"
         description="This will be a simple counter in the future"
@@ -45,6 +71,7 @@ export default function Home() {
           This is outside the div
         </button>
       </CardCombined>
+      <TeamDisplay data={teamMembers} />
     </div>
   );
 }
