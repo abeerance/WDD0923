@@ -1,3 +1,6 @@
+import { CurrentTime } from "@/components/current-time/current-time";
+import { LanguageList } from "@/components/language-list/language-list";
+import { SimpleProfile } from "@/components/simple-profile/simple-profile";
 import { Button, ButtonReactNode } from "@/components/ui/button/button";
 import { Card, CardCombined, CardReactNode } from "@/components/ui/card/card";
 import { Text } from "@/components/ui/typography/text";
@@ -5,7 +8,10 @@ import { Title } from "@/components/ui/typography/title";
 
 export default function Home() {
   return (
-    <div className="h-full w-full flex flex-col justify-center items-center gap-2">
+    <div className="h-full w-full flex flex-col items-center gap-2">
+      <SimpleProfile />
+      <CurrentTime />
+      <LanguageList />
       <Card
         title="This is the card without ReactNode"
         description="This is a click counter"
@@ -13,7 +19,6 @@ export default function Home() {
         minusButtonLabel="-"
         additionButtonLabel="+"
       />
-
       <CardReactNode>
         <Title>A simple click counter with ReactNode</Title>
         <Title headingLevel={4}>This will display another Click counter card</Title>
