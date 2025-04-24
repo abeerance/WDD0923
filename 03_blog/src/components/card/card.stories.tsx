@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Card } from "./card";
+import { Button } from "../ui/button/button";
 
 const meta: Meta<typeof Card> = {
   title: "Components / Data Display / Card",
@@ -34,4 +35,12 @@ const RenderCardGrid = () => {
 
 export const Default: Story = {
   render: () => <RenderCardGrid />,
+};
+
+export const TestStory: Story = {
+  render: () => (
+    <Card title="this is a test">
+      <Button className="self-end">Button</Button>
+    </Card>
+  ),
 };

@@ -1,23 +1,53 @@
-import clsx from "clsx";
-import { ReactNode } from "react";
+import { cn } from "@/lib/utils";
+import { ButtonHTMLAttributes, forwardRef, ReactNode } from "react";
 
-interface ButtonProps {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "ghost" | "destructive";
-  children: ReactNode;
+  size?: "label" | "label-small";
+  leftSection?: ReactNode;
+  rightSection?: ReactNode;
 }
 
-export const Button = ({ variant = "primary", children }: ButtonProps) => {
-  return (
-    <button
-      className={clsx(
-        "py-2 px-3 rounded-md text-sm cursor-pointer",
-        variant === "primary" && "bg-blue-950 text-gray-100 hover:bg-blue-800",
-        variant === "secondary" && "bg-amber-600 text-gray-100",
-        variant === "ghost" && "text-gray-900 underline",
-        variant === "destructive" && "bg-red-500 text-gray-100"
-      )}
-    >
-      {children}
-    </button>
-  );
-};
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      className,
+      variant = "primary",
+      size = "label",
+      leftSection,
+      rightSection,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const sizeClasses = {
+      label: "typo-label",
+      "label-small": "typo-label-small",
+    };
+
+    return (
+      <button
+        ref={ref}
+        className={cn(
+          "rounded-md cursor-pointer inline-flex items-center px-xs py-2xs",
+          variant === "primary" && "bg-blue-950 text-gray-100 hover:bg-blue-800",
+          variant === "secondary" && "bg-amber-600 text-gray-100",
+          variant === "ghost" && "text-gray-900 underline",
+          variant === "destructive" && "bg-red-500 text-gray-100",
+          leftSection && "gap-2xs pr-m pl-2xs",
+          rightSection && "pl-m gap-2xs pr-2xs",
+          sizeClasses[size],
+          className
+        )}
+        {...props}
+      >
+        {leftSection && <span>{leftSection}</span>}
+        {children}
+        {rightSection && <span>{rightSection}</span>}
+      </button>
+    );
+  }
+);
+
+Button.displayName = "Button";

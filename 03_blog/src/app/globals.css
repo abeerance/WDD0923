@@ -10,6 +10,117 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --spacing: clamp(0.25rem, 0.25rem + 0vw, 0.25rem);
+  --spacing-2xs: clamp(0.25rem, 0.162rem + 0.376vw, 0.5rem);
+  --spacing-xs: clamp(0.5rem, 0.412rem + 0.376vw, 0.75rem);
+  --spacing-s: clamp(0.75rem, 0.662rem + 0.376vw, 1rem);
+  --spacing-m: clamp(1rem, 0.824rem + 0.751vw, 1.5rem);
+  --spacing-l: clamp(1.5rem, 1.148rem + 1.502vw, 2.5rem);
+  --spacing-xl: clamp(2rem, 1.472rem + 2.254vw, 3.5rem);
+  --spacing-2xl: clamp(3rem, 2.296rem + 3.005vw, 5rem);
+  --spacing-3xl: clamp(4rem, 2.768rem + 5.258vw, 7.5rem);
+
+  --text-headline-1: clamp(2.0736rem, 1.7292rem + 1.4695vw, 3.0518rem);
+  --text-headline-2: clamp(1.44rem, 1.2593rem + 0.7709vw, 1.9531rem);
+  --text-headline-3: clamp(1.2rem, 1.0724rem + 0.5446vw, 1.5625rem);
+  --text-headline-4: clamp(1rem, 0.912rem + 0.3756vw, 1.25rem);
+  --text-headline-5: clamp(0.8333rem, 0.7746rem + 0.2504vw, 1rem);
+  --text-headline-6: clamp(0.6944rem, 0.6573rem + 0.1586vw, 0.8rem);
+  --text-body: clamp(1rem, 0.912rem + 0.3756vw, 1.25rem);
+  --text-body-small: clamp(0.8333rem, 0.7746rem + 0.2504vw, 1rem);
+  --text-body-micro: clamp(0.6944rem, 0.6573rem + 0.1586vw, 0.8rem);
+  --text-display: clamp(2.4883rem, 2.0213rem + 1.9927vw, 3.8147rem);
+  --text-lead: clamp(1.44rem, 1.2593rem + 0.7709vw, 1.9531rem);
+  --text-label: clamp(1rem, 0.912rem + 0.3756vw, 1.25rem);
+  --text-label-small: clamp(0.83rem, 0.7701rem + 0.2554vw, 1rem);
+
+  --text-headline-1-line-height: clamp(2.364rem, 2.026rem + 1.446vw, 3.327rem);
+  --text-headline-2-line-height: clamp(1.757rem, 1.592rem + 0.705vw, 2.226rem);
+  --text-headline-3-line-height: clamp(1.476rem, 1.374rem + 0.436vw, 1.766rem);
+  --text-headline-4-line-height: clamp(1.35rem, 1.227rem + 0.526vw, 1.7rem);
+  --text-headline-5-line-height: clamp(1.204rem, 1.149rem + 0.234vw, 1.36rem);
+  --text-headline-6-line-height: clamp(0.916rem, 0.844rem + 0.306vw, 1.12rem);
+  --text-body-line-height: clamp(1.35rem, 1.227rem + 0.526vw, 1.7rem);
+  --text-body-small-line-height: clamp(1.204rem, 1.149rem + 0.234vw, 1.36rem);
+  --text-body-micro-line-height: clamp(0.916rem, 0.844rem + 0.306vw, 1.12rem);
+  --text-display-line-height: clamp(2.811rem, 2.485rem + 1.393vw, 3.739rem);
+  --text-lead-line-height: clamp(1.872rem, 1.706rem + 0.709vw, 2.344rem);
+  --text-label-line-height: clamp(1.25rem, 1.162rem + 0.3756vw, 1.5rem);
+  --text-label-small-line-height: clamp(1.245rem, 1.1623rem + 0.3531vw, 1.48rem);
+}
+
+@layer utilities {
+  .typo-headline-1 {
+    font-size: var(--text-headline-1);
+    line-height: var(--text-headline-1-line-height);
+    font-weight: 700;
+  }
+
+  .typo-headline-2 {
+    font-size: var(--text-headline-2);
+    line-height: var(--text-headline-2-line-height);
+    font-weight: 700;
+  }
+
+  .typo-headline-3 {
+    font-size: var(--text-headline-3);
+    line-height: var(--text-headline-3-line-height);
+    font-weight: 700;
+  }
+
+  .typo-headline-4 {
+    font-size: var(--text-headline-4);
+    line-height: var(--text-headline-4-line-height);
+    font-weight: 700;
+  }
+  .typo-headline-5 {
+    font-size: var(--text-headline-5);
+    line-height: var(--text-headline-5-line-height);
+    font-weight: 700;
+  }
+
+  .typo-headline-6 {
+    font-size: var(--text-headline-6);
+    line-height: var(--text-headline-6-line-height);
+    font-weight: 700;
+  }
+
+  .typo-body {
+    font-size: var(--text-body);
+    line-height: var(--text-body-line-height);
+  }
+
+  .typo-body-small {
+    font-size: var(--text-body-small);
+    line-height: var(--text-body-small-line-height);
+  }
+
+  .typo-body-micro {
+    font-size: var(--text-body-micro);
+    line-height: var(--text-body-micro-line-height);
+  }
+
+  .typo-display {
+    font-size: var(--text-display);
+    line-height: var(--text-display-line-height);
+  }
+
+  .typo-lead {
+    font-size: var(--text-lead);
+    line-height: var(--text-lead-line-height);
+  }
+
+  .typo-label {
+    font-size: var(--text-label);
+    line-height: var(--text-label-line-height);
+  }
+
+  .typo-label-small {
+    font-size: var(--text-label-small);
+    line-height: var(--text-label-small-line-height);
+    letter-spacing: clamp(-0.0083125rem, -0.0077rem + -0.0025vw, -0.01rem);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
