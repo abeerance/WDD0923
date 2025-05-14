@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { ButtonHTMLAttributes, forwardRef, ReactNode } from "react";
 
@@ -40,6 +42,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           sizeClasses[size],
           className
         )}
+        onClick={() => {
+          console.log("hello world");
+        }}
         {...props}
       >
         {leftSection && <span>{leftSection}</span>}

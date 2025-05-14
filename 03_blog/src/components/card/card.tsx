@@ -1,15 +1,17 @@
+import Link from "next/link";
 import { ReactNode } from "react";
 
 interface CardProps {
   title: string;
-  children?: ReactNode;
+  children: ReactNode;
+  slug: string;
 }
 
-export const Card = ({ title, children }: CardProps) => {
+export const Card = ({ title, children, slug }: CardProps) => {
   return (
-    <div className="p-4 rounded-md shadow-xl flex flex-col gap-l">
+    <Link href={`/${slug}`} className="p-4 rounded-md shadow-xl flex flex-col gap-l">
       <p>{title}</p>
       {children}
-    </div>
+    </Link>
   );
 };
