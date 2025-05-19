@@ -1,0 +1,11 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "php artisan serve",
+        "seed": "touch ./database/database.sqlite && php artisan migrate:fresh --seed"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.20"
+    }
+}
