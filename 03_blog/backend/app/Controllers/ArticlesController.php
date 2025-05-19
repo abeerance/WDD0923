@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class ArticlesController
@@ -56,6 +57,10 @@ class ArticlesController
             throw ValidationException::withMessages(['image_id' => 'You do not have permission to use this cover image.']);
         }
 
+        // Generate the slug with date prefix
+        $slug = $this->generateDateSlug($validatedData['title']);
+        $validatedData['slug'] = $slug;
+
         // Create the article
         $article = Auth::user()->articles()->create($validatedData);
 
@@ -84,11 +89,17 @@ class ArticlesController
             throw ValidationException::withMessages(['image_id' => 'You do not have permission to use this cover image.']);
         }
 
+        // Update the slug if title is changed
+        if (isset($validatedData['title'])) {
+            $validatedData['slug'] = $this->generateDateSlug($validatedData['title']);
+        }
+
         // Update the article
         $article->update($validatedData);
 
         return response()->json(['article' => $article], 200);
     }
+
 
     // Delete an article
     public function destroy($id)
@@ -103,5 +114,23 @@ class ArticlesController
     private function ownsImage(int $imageId): bool
     {
         return Auth::user()->images()->where('id', $imageId)->exists();
+    }
+
+    /**
+     * Generate a slug with the current date as prefix
+     *
+     * @param string $title
+     * @return string
+     */
+    private function generateDateSlug(string $title): string
+    {
+        // Format current date as YYYY-MM-DD
+        $datePrefix = date('Y-m-d');
+
+        // Generate slug from title
+        $titleSlug = Str::slug($title);
+
+        // Combine with date prefix
+        return $datePrefix . '/' . $titleSlug;
     }
 }

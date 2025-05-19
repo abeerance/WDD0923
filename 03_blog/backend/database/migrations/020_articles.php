@@ -10,6 +10,7 @@ return new class extends Migration {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('slug')->unique(); // Add the slug column here
             $table->json('content'); // Store the JSON content here
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('image_id')->nullable()->constrained('images')->nullOnDelete(); // Allow null for image

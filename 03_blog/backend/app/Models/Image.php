@@ -10,7 +10,7 @@ class Image extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['url', 'alt_text', 'user_id', 'article_id'];
+    protected $fillable = ['url', 'name', 'user_id', 'article_id'];
 
     public function user(): BelongsTo
     {

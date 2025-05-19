@@ -12,7 +12,8 @@ class Article extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'content', 'user_id', 'image_id'];
+    // Add 'slug' to the fillable fields
+    protected $fillable = ['title', 'content', 'user_id', 'image_id', 'slug'];
 
     public function user(): BelongsTo
     {
@@ -32,5 +33,15 @@ class Article extends Model
     public function coverImage(): BelongsTo
     {
         return $this->belongsTo(Image::class, 'image_id');
+    }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }
