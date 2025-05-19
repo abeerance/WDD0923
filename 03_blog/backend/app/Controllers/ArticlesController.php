@@ -24,6 +24,19 @@ class ArticlesController
             $q->whereHas('tags', fn($q) => $q->whereIn('tag_id', $tagIds), '>=', count($tagIds));
         });
 
+        // tag name filtering
+        $query->when($request->filled('tag_names'), function ($q) use ($request) {
+            $tagNames = explode(',', $request->input('tag_names'));
+
+            // Convert all input tag names to lowercase
+            $tagNames = array_map('strtolower', $tagNames);
+
+            $q->whereHas('tags', function ($tagQuery) use ($tagNames) {
+                // Use LOWER() function to make the comparison case-insensitive
+                $tagQuery->whereRaw('LOWER(tags.name) IN (' . implode(',', array_fill(0, count($tagNames), '?')) . ')', $tagNames);
+            }, '>=', count($tagNames));
+        });
+
         // Apply ordering
         $query->orderBy(
             $request->input('order_by', 'created_at'),
