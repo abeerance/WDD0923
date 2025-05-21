@@ -145,6 +145,6 @@ class ArticlesController
         $titleSlug = Str::slug($title);
 
         // Combine with date prefix
-        return $datePrefix . '/' . $titleSlug;
+        return $datePrefix . '-' . $titleSlug;
     }
 }

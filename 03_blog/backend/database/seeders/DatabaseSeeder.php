@@ -317,7 +317,7 @@ class DatabaseSeeder extends Seeder
             // Format date and create slug
             $date = $articleData['date'];
             $title = $articleData['title'];
-            $slug = $date . '/' . Str::slug($title);
+            $slug = $date . '-' . Str::slug($title);
 
             // Create the article
             $article = Article::create([
