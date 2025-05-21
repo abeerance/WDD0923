@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Text } from "../ui/text/text";
 import {
@@ -10,21 +9,13 @@ import {
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import { Menu } from "lucide-react";
+import { Logo } from "../logo/logo";
 
 export const Header = () => {
   return (
     <header className="flex p-l justify-between items-center bg-gray-100 border-b border-b-gray-200">
-      <Link href="/" className="cursor-pointer">
-        {/*
-        1. possibility, if the image is always the same dimension
-        <Image src="/logo/wandrstay-logo.svg" alt="wandrstay logo" width={60} height={30} />
-        */}
-        <div className="relative w-[60px] aspect-[16/9]">
-          {/* parent container of image */}
-          <Image src="/logo/wandrstay-logo.svg" alt="wandrstay logo" fill />
-        </div>
-      </Link>
-      <nav className="flex gap-m item-center">
+      <Logo />
+      <nav className="flex gap-m items-center">
         <Link href="/blog" className="cursor-pointer">
           <Text variant="body-small">Blog</Text>
         </Link>

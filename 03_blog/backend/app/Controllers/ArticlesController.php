@@ -19,6 +19,7 @@ class ArticlesController
         $query->when($request->filled('id'), fn($q) => $q->where('id', $request->input('id')));
         $query->when($request->filled('title'), fn($q) => $q->where('title', 'like', '%' . $request->input('title') . '%'));
         $query->when($request->filled('user_id'), fn($q) => $q->where('user_id', $request->input('user_id')));
+        $query->when($request->filled('slug'), fn($q) => $q->where('slug', $request->input('slug')));
         $query->when($request->filled('tag_ids'), function ($q) use ($request) {
             $tagIds = explode(',', $request->input('tag_ids'));
             $q->whereHas('tags', fn($q) => $q->whereIn('tag_id', $tagIds), '>=', count($tagIds));
