@@ -5,7 +5,7 @@ import { HTMLAttributes, ReactNode } from "react";
 type TextElement = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span";
 
 // Define typography variants
-type TextVariant =
+export type TextVariant =
   | "headline-1"
   | "headline-2"
   | "headline-3"

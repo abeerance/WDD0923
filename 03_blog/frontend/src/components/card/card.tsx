@@ -1,17 +1,19 @@
 import Link from "next/link";
 import { ReactNode } from "react";
+import { GridItem } from "../ui/grid/grid";
 
 interface CardProps {
-  title: string;
   children: ReactNode;
   slug: string;
 }
 
-export const Card = ({ title, children, slug }: CardProps) => {
+export const Card = ({ children, slug }: CardProps) => {
   return (
-    <Link href={`/${slug}`} className="p-4 rounded-md shadow-xl flex flex-col gap-l">
-      <p>{title}</p>
-      {children}
-    </Link>
+    <GridItem
+      span={{ sm: 12, md: 6, lg: 4 }}
+      className="rounded-xl shadow-md overflow-clip bg-white flex flex-col border border-gray-100 cursor-pointer"
+    >
+      <Link href={slug}>{children}</Link>
+    </GridItem>
   );
 };
