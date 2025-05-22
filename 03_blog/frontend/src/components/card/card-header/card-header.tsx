@@ -27,7 +27,7 @@ export const CardHeader = ({ title, lead, content, className }: CardHeaderProps)
           {lead}
         </Text>
       </div>
-      {content}
+      {content && content}
     </div>
   );
 };
