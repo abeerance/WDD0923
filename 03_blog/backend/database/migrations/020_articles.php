@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->string('slug')->unique(); // Add the slug column here
+            $table->text('lead'); // Add the lead column here
             $table->json('content'); // Store the JSON content here
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('image_id')->nullable()->constrained('images')->nullOnDelete(); // Allow null for image

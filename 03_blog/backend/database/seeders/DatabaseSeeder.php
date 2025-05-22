@@ -89,6 +89,7 @@ class DatabaseSeeder extends Seeder
         $articles = [
             [
                 'title' => 'Exploring Ancient Temples in Kyoto',
+                'lead' => 'A journey through Japan\'s historic capital reveals timeless beauty and spiritual wonder among its thousands of temples and shrines.',
                 'date' => '2025-03-15',
                 'tags' => ['Culture', 'City Break'],
                 'user_id' => 1,
@@ -132,6 +133,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'title' => 'Santorini: The Perfect Greek Island Getaway',
+                'lead' => 'Experience the magic of Santorini\'s dramatic cliffs, iconic white buildings, and breathtaking sunsets in this Mediterranean paradise.',
                 'date' => '2025-04-22',
                 'tags' => ['Beach', 'Luxury'],
                 'user_id' => 2,
@@ -170,6 +172,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'title' => 'Hiking the Inca Trail to Machu Picchu',
+                'lead' => 'Follow ancient pathways through cloud forests and mountain passes to discover the lost city of the Incas in this ultimate trekking adventure.',
                 'date' => '2025-01-18',
                 'tags' => ['Hiking', 'Adventure'],
                 'user_id' => 3,
@@ -213,6 +216,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'title' => 'Road Trip Through Norway\'s Fjords',
+                'lead' => 'Navigate winding roads, tunnels and bridges to explore Norway\'s dramatic fjord landscapes, where towering cliffs meet pristine waters.',
                 'date' => '2025-02-10',
                 'tags' => ['Road Trip', 'Adventure'],
                 'user_id' => 1,
@@ -260,6 +264,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'title' => 'A Weekend in New York City: The Ultimate Guide',
+                'lead' => 'Make the most of 72 hours in the Big Apple with this insider\'s guide to iconic landmarks, diverse neighborhoods, and unforgettable culinary experiences.',
                 'date' => '2025-05-01',
                 'tags' => ['City Break', 'Food'],
                 'user_id' => 2,
@@ -322,6 +327,7 @@ class DatabaseSeeder extends Seeder
             // Create the article
             $article = Article::create([
                 'title' => $title,
+                'lead' => $articleData['lead'],
                 'slug' => $slug,
                 'content' => json_encode($articleData['content']),
                 'user_id' => $articleData['user_id'],

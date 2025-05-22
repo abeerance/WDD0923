@@ -18,6 +18,7 @@ class ArticlesController
         // Apply filters
         $query->when($request->filled('id'), fn($q) => $q->where('id', $request->input('id')));
         $query->when($request->filled('title'), fn($q) => $q->where('title', 'like', '%' . $request->input('title') . '%'));
+        $query->when($request->filled('lead'), fn($q) => $q->where('lead', 'like', '%' . $request->input('lead') . '%'));
         $query->when($request->filled('user_id'), fn($q) => $q->where('user_id', $request->input('user_id')));
         $query->when($request->filled('slug'), fn($q) => $q->where('slug', $request->input('slug')));
         $query->when($request->filled('tag_ids'), function ($q) use ($request) {
@@ -59,6 +60,7 @@ class ArticlesController
         // Validate request data
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
+            'lead' => 'required|string|max:500',
             'content' => 'required|array',
             'image_id' => 'nullable|integer|exists:images,id',
         ]);
@@ -89,6 +91,7 @@ class ArticlesController
         // Validate request data
         $validatedData = $request->validate([
             'title' => 'sometimes|string|max:255',
+            'lead' => 'sometimes|string|max:500', // Add validation for lead field
             'content' => 'sometimes|array',
             'image_id' => 'nullable|integer|exists:images,id',
         ]);

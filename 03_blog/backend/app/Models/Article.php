@@ -12,8 +12,8 @@ class Article extends Model
 {
     use HasFactory;
 
-    // Add 'slug' to the fillable fields
-    protected $fillable = ['title', 'content', 'user_id', 'image_id', 'slug'];
+    // Add 'lead' to the fillable fields
+    protected $fillable = ['title', 'content', 'user_id', 'image_id', 'slug', 'lead'];
 
     public function user(): BelongsTo
     {
