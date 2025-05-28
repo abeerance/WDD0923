@@ -12,7 +12,11 @@
   },
   "dependencies": {
     "@radix-ui/react-dropdown-menu": "^2.1.15",
+    "@tiptap/pm": "^2.12.0",
+    "@tiptap/react": "^2.12.0",
+    "@tiptap/starter-kit": "^2.12.0",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "lucide-react": "^0.503.0",
     "next": "15.3.1",
     "react": "^19.0.0",

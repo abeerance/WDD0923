@@ -42,3 +42,13 @@ export interface Article {
   tags: Tag[];
   cover_image: Image;
 }
+
+/*
+ * Interface for public user data
+ */
+export interface PublicUser {
+  id: number;
+  username: string;
+  bio: string;
+  avatar_id: number;
+}
