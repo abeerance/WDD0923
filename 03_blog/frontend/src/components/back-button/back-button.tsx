@@ -11,10 +11,18 @@ export const BackButton = () => {
 		<button
 			type="button"
 			onClick={() => router.back()}
-			className="flex gap-2xs cursor-pointer"
+			className="inline-flex items-center gap-2xs cursor-pointer bg-gray-400/20 pr-s pl-xs py-2xs rounded-full group hover:bg-teal-700/90 transition-colors duration-300"
 		>
-			<ArrowLeft size={20} />
-			<Text variant="body-small">Back</Text>
+			<ArrowLeft
+				size={18}
+				className="text-gray-800 group-hover:text-white transition-colors duration-300"
+			/>
+			<Text
+				variant="body-small"
+				className="text-gray-800 group-hover:text-white transition-colors duration-300"
+			>
+				Back
+			</Text>
 		</button>
 	);
 };

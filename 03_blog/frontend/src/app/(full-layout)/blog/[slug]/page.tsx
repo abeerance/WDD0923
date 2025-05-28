@@ -53,7 +53,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
 				<Text className="mt-m">{lead}</Text>
 			</GridItem>
 			<GridItem span={12} className="flex flex-col gap-s">
-				<div className="w-full aspect-[16/9] relative rounded-xl overflow-hidden">
+				<div className="w-full aspect-video relative rounded-xl overflow-hidden">
 					<ImageContainer src={cover_image.url} alt={cover_image.name} />
 				</div>
 				<div className="flex flex-wrap gap-2xs">
