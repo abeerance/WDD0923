@@ -20,6 +20,32 @@ class UserController
         return $user;
     }
 
+    // Get a specific user by ID (public endpoint for author info)
+    public function index(Request $request)
+    {
+        $userId = $request->query('id');
+
+        if (!$userId) {
+            return response()->json(['error' => 'User ID is required'], 400);
+        }
+
+        $user = User::find($userId);
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        // Return only public user information (exclude sensitive data)
+        return response()->json([
+            'id' => $user->id,
+            'username' => $user->username,
+            'bio' => $user->bio,
+            'avatar_id' => $user->avatar_id,
+            'created_at' => $user->created_at,
+            'updated_at' => $user->updated_at,
+        ]);
+    }
+
     // Create a new user
     public function create(Request $request)
     {

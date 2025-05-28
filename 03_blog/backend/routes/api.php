@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 // Guest endpoints
 Route::post('/user', [UserController::class, 'create']);
+Route::get('/users', [UserController::class, 'index']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::get('/articles', [ArticlesController::class, 'index']);
 Route::get('/comments', [CommentsController::class, 'index']); // Fetch comments (supports filtering)
