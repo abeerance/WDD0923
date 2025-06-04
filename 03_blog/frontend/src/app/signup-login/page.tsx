@@ -47,10 +47,12 @@ export default function SignupLoginPage() {
   // react hook form is primarily used for the state in the form, aka. form data handling
   const loginForm = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
+    mode: "onSubmit", // this means that the validation will only trigger when we submit the form
   });
 
   const signupForm = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
+    mode: "onSubmit", // this means that the validation will only trigger when we submit the form
   });
 
   // here we now create two different submits in how the form should be handled on a submit
@@ -76,6 +78,7 @@ export default function SignupLoginPage() {
   if (state === "login") {
     return (
       <form
+        key="login-form" // needed for the unique form
         className="flex flex-col min-h-svh items-center justify-center"
         // here we connect the form with all the previous stuff of the loginForm with the help of the onSubmit property
         onSubmit={loginForm.handleSubmit(onLoginSubmit)}
@@ -146,6 +149,7 @@ export default function SignupLoginPage() {
 
   return (
     <form
+      key="signup-form" // needed for the unique form
       className="flex flex-col min-h-svh items-center justify-center"
       // here we connect the form with all the previous stuff of the signupForm with the help of the onSubmit property
       onSubmit={signupForm.handleSubmit(onSignupSubmit)}
