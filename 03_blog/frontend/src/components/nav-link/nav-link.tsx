@@ -1,16 +1,24 @@
 import Link from "next/link";
 import { ReactNode } from "react";
-import { Text } from "../ui/text/text";
+import { Text, TextVariant } from "../ui/text/text";
+import { cn } from "@/lib/utils";
 
 interface NavLinkProps {
   href: string;
   children: ReactNode;
+  textVariant?: TextVariant;
+  className?: string;
 }
 
-export const NavLink = ({ href, children }: NavLinkProps) => {
+export const NavLink = ({
+  href,
+  children,
+  textVariant = "body-small",
+  className,
+}: NavLinkProps) => {
   return (
-    <Link href={href} className="cursor-pointer">
-      <Text variant="body-small">{children}</Text>
+    <Link href={href} className={cn("cursor-pointer", className)}>
+      <Text variant={textVariant}>{children}</Text>
     </Link>
   );
 };
