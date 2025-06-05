@@ -9,6 +9,7 @@ import { Text } from "@/components/ui/text/text";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -43,6 +44,7 @@ type SignupFormData = z.infer<typeof signupSchema>;
 
 export default function SignupLoginPage() {
   const [state, setState] = useState<FormState>("login");
+  const router = useRouter();
 
   // now we create two different forms, one for the login form and one for the signup form, both of them have a unique form-context, because we are adding the schema and the formData to the context
   // react hook form is primarily used for the state in the form, aka. form data handling
@@ -69,8 +71,15 @@ export default function SignupLoginPage() {
         redirect: false,
       });
 
-      console.log(result);
-    } catch {}
+      if (result.error) {
+        toast.error("Login failed. Please check your credentials");
+      } else {
+        toast.success("Login successful");
+        router.push("/dashboard");
+      }
+    } catch {
+      toast.error("An error occured during login");
+    }
   };
 
   const onSignupSubmit = async (data: SignupFormData) => {

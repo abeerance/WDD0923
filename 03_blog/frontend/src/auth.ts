@@ -1,4 +1,5 @@
-import NextAuth from "next-auth";
+import NextAuth, { Session, User } from "next-auth";
+import { JWT } from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -57,4 +58,29 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
+  // callbacks are the callbacks that are needed to give additional information to the auth.js session. callbacks function like this: response from backend -> jwt -> session
+  // this is needed, so that we can append the information we get from the backend to the auth.js session
+  callbacks: {
+    // async JWT callback: runs whenever JWT is accessed (login, session check, etc.)
+    async jwt({ token, user }: { token: JWT; user: User }) {
+      if (user) {
+        // on initial login, checks if a user object exists
+        // here we transfer our custom properties from user to the JWT token which is in-built in auth.js
+        token.accessToken = user.accessToken;
+        token.username = user.username;
+      }
+      // token persists between request, user only exist on initial login. here we return the token, so we can append it later to the session
+      return token;
+    },
+
+    // async session callback: runs whenever session is accessed
+    async session({ session, token }: { session: Session; token: JWT }) {
+      // here we transfer our custom properties from the previously created JWT token to the in-built session object of auth.js, which will be stored in the browser localStorage (cookies)
+      // this is what your app will receive when calling useSession() or auth()
+      session.accessToken = token.accessToken;
+      session.username = token.username;
+
+      return session;
+    },
+  },
 });

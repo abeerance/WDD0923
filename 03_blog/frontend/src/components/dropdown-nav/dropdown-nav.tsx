@@ -7,8 +7,12 @@ import {
 import { MenuButton } from "../menu-button/menu-button";
 import { MenuItem } from "../menu-item/menu-item";
 import { MenuSeperator } from "../menu-seperator/menu-seperator";
+import { auth } from "@/auth";
+import { Logout } from "../logout/logout";
 
-export const DropdownNav = () => {
+export const DropdownNav = async () => {
+  const user = await auth();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -22,11 +26,15 @@ export const DropdownNav = () => {
         >
           <MenuItem href="/about" title="About" description="Find out more" />
           <MenuSeperator />
-          <MenuItem
-            href="/signup-login"
-            title="Login or sign up"
-            description="Let us know your wandrstay"
-          />
+          {user?.username ? (
+            <Logout />
+          ) : (
+            <MenuItem
+              href="/signup-login"
+              title="Login or sign up"
+              description="Let us know your wandrstay"
+            />
+          )}
         </DropdownMenuContent>
       </DropdownMenuPortal>
     </DropdownMenu>
