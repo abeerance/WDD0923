@@ -7,6 +7,7 @@ import { Grid, GridItem } from "@/components/ui/grid/grid";
 import { Input } from "@/components/ui/input/input";
 import { Text } from "@/components/ui/text/text";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -58,6 +59,18 @@ export default function SignupLoginPage() {
   // here we now create two different submits in how the form should be handled on a submit
   const onLoginSubmit = async (data: LoginFormData) => {
     console.log("Login data: ", data);
+
+    // we call the signIn() function of auth.js here so that we can log in the user
+    try {
+      // call the signIn() function which calls the authorize function in auth.ts
+      const result = await signIn("login", {
+        username: data.username,
+        password: data.password,
+        redirect: false,
+      });
+
+      console.log(result);
+    } catch {}
   };
 
   const onSignupSubmit = async (data: SignupFormData) => {
