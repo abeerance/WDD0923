@@ -42,22 +42,27 @@ class UploadsController
         $type = $request->post('type');
         Log::info("Uploading {$type} image for user {$user->username}");
 
-
         foreach ($request->file('files') as $file) {
             $originalFilename = $file->getClientOriginalName();
             $filename = pathinfo($originalFilename, PATHINFO_FILENAME);
             $extension = $file->getClientOriginalExtension();
 
-            // Generate unique filename
-            $uniqueFilename = $filename . '_' . Str::random(16) . '.' . $extension;
+            // Clean filename: remove spaces, parentheses, and special characters
+            $cleanFilename = preg_replace('/[^A-Za-z0-9\-_]/', '_', $filename);
+
+            // Generate unique filename with clean name
+            $uniqueFilename = $cleanFilename . '_' . Str::random(16) . '.' . $extension;
             $pathname = "uploads/{$user->username}/{$uniqueFilename}";
 
             // Store the file in public disk
             $file->storeAs("uploads/{$user->username}", $uniqueFilename, 'public');
 
+            // Generate full HTTP URL
+            $fullUrl = url(Storage::url($pathname));
+
             // Create image record in the database
             $image = Image::create([
-                'url' => Storage::url($pathname),  // Generate public URL
+                'url' => $fullUrl,  // Store full HTTP URL
                 'alt_text' => $request->post('title'),
                 'user_id' => $user->id,
                 'article_id' => $type === 'article' && isset($validatedData['article_id']) ? $validatedData['article_id'] : null,

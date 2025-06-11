@@ -46,7 +46,12 @@ class DatabaseSeeder extends Seeder
             'Food',
             'Luxury',
             'Backpacking',
-            'Road Trip'
+            'Road Trip',
+            'Photography',
+            'Wildlife',
+            'Mountains',
+            'Desert',
+            'Islands'
         ];
 
         $tags = [];
@@ -54,289 +59,145 @@ class DatabaseSeeder extends Seeder
             $tags[$name] = Tag::create(['name' => $name]);
         }
 
-        // Create travel images
+        // Create travel images - each article gets its own matching image
         ////////////////////////////////////////////////////////////////////////////
         $images = [
-            Image::create([
-                'name' => 'Kyoto Temple',
-                'url' => 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e',
-                'user_id' => 1,
-            ]),
-            Image::create([
-                'name' => 'Santorini Coastline',
-                'url' => 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff',
-                'user_id' => 2,
-            ]),
-            Image::create([
-                'name' => 'Machu Picchu',
-                'url' => 'https://images.unsplash.com/photo-1526392060635-9d6019884377',
-                'user_id' => 3,
-            ]),
-            Image::create([
-                'name' => 'Norwegian Fjords',
-                'url' => 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38',
-                'user_id' => 1,
-            ]),
-            Image::create([
-                'name' => 'New York Skyline',
-                'url' => 'https://images.unsplash.com/photo-1518391846015-55a9cc003b25',
-                'user_id' => 2,
-            ]),
+            // Articles 1-10
+            Image::create(['name' => 'Kyoto Temple', 'url' => 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800&h=600&fit=crop', 'user_id' => 1]),
+            Image::create(['name' => 'Santorini Coastline', 'url' => 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800&h=600&fit=crop', 'user_id' => 1]),
+            Image::create(['name' => 'Machu Picchu', 'url' => 'https://images.unsplash.com/photo-1526392060635-9d6019884377?w=800&h=600&fit=crop', 'user_id' => 1]),
+            Image::create(['name' => 'Norwegian Fjords', 'url' => 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=800&h=600&fit=crop', 'user_id' => 1]),
+            Image::create(['name' => 'New York Skyline', 'url' => 'https://images.unsplash.com/photo-1518391846015-55a9cc003b25?w=800&h=600&fit=crop', 'user_id' => 1]),
+            Image::create(['name' => 'Tokyo Street Food', 'url' => 'https://images.unsplash.com/photo-1554797589-7241bb691973?w=800&h=600&fit=crop', 'user_id' => 1]),
+            Image::create(['name' => 'Swiss Alps', 'url' => 'https://plus.unsplash.com/premium_photo-1689084892324-fd8822cb97c1?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'user_id' => 1]),
+            Image::create(['name' => 'Bali Beach', 'url' => 'https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=800&h=600&fit=crop', 'user_id' => 1]),
+            Image::create(['name' => 'Iceland Ring Road', 'url' => 'https://images.unsplash.com/photo-1491451412778-3e2c8b766720?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'user_id' => 1]),
+            Image::create(['name' => 'Dubai Cityscape', 'url' => 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&h=600&fit=crop', 'user_id' => 1]),
+
+
+            // Articles 11-20
+            Image::create(['name' => 'Southeast Asia Backpacking', 'url' => 'https://images.unsplash.com/photo-1648540389107-909e6624078c?q=80&w=1970&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'user_id' => 1]),
+            Image::create(['name' => 'Canadian Rockies Camping', 'url' => 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&h=600&fit=crop', 'user_id' => 1]),
+            Image::create(['name' => 'Kenya Safari', 'url' => 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=800&h=600&fit=crop', 'user_id' => 1]),
+            Image::create(['name' => 'Morocco Sahara Desert', 'url' => 'https://images.unsplash.com/photo-1516895065658-70aaefea6765?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'user_id' => 1]),
+            Image::create(['name' => 'New Zealand Landscape', 'url' => 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=crop', 'user_id' => 1]),
+            Image::create(['name' => 'Cinque Terre Italy', 'url' => 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=800&h=600&fit=crop', 'user_id' => 1]),
+            Image::create(['name' => 'Maldives Resort', 'url' => 'https://images.unsplash.com/photo-1682308999971-208126ba75ec?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'user_id' => 1]),
+            Image::create(['name' => 'Scottish Highland Castle', 'url' => 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&h=600&fit=crop', 'user_id' => 1]),
+            Image::create(['name' => 'Costa Rica Wildlife', 'url' => 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=600&fit=crop', 'user_id' => 1]),
+            Image::create(['name' => 'Australian Outback', 'url' => 'https://images.unsplash.com/photo-1587045554011-af22ff815a76?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'user_id' => 1]),
+
+            // Articles 21-28
+            Image::create(['name' => 'Paris Cafe', 'url' => 'https://plus.unsplash.com/premium_photo-1665669263531-cdcbe18e7fe4?q=80&w=2125&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'user_id' => 1]),
+            Image::create(['name' => 'Patagonia Mountains', 'url' => 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop', 'user_id' => 1]),
+            Image::create(['name' => 'Vietnam Motorbike', 'url' => 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop', 'user_id' => 1]),
+            Image::create(['name' => 'Seychelles Beach', 'url' => 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=crop', 'user_id' => 1]),
+            Image::create(['name' => 'Nepal Everest', 'url' => 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&h=600&fit=crop', 'user_id' => 1]),
+            Image::create(['name' => 'Trans-Siberian Railway', 'url' => 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=800&h=600&fit=crop', 'user_id' => 1]),
+            Image::create(['name' => 'Jordan Petra', 'url' => 'https://images.unsplash.com/photo-1548786811-dd6e453ccca7?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'user_id' => 1]),
+            Image::create(['name' => 'Croatian Islands', 'url' => 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=800&h=600&fit=crop', 'user_id' => 1]),
+
+            // Extra images for other users
+            Image::create(['name' => 'Brazil Carnival', 'url' => 'https://images.unsplash.com/photo-1516834321653-1c72a8e57f8f?w=800&h=600&fit=crop', 'user_id' => 2]),
+            Image::create(['name' => 'Antarctica Expedition', 'url' => 'https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=800&h=600&fit=crop', 'user_id' => 3]),
         ];
 
-        // Articles for a Travel Blog with proper content
+        // 25+ Articles for User 1 to test pagination - each with matching image
         ////////////////////////////////////////////////////////////////////////////
-        $articles = [
-            [
-                'title' => 'Exploring Ancient Temples in Kyoto',
-                'lead' => 'A journey through Japan\'s historic capital reveals timeless beauty and spiritual wonder among its thousands of temples and shrines.',
-                'date' => '2025-03-15',
-                'tags' => ['Culture', 'City Break'],
-                'user_id' => 1,
-                'image_id' => $images[0]->id,
-                'content' => [
-                    'type' => 'doc',
-                    'content' => [
-                        [
-                            'type' => 'heading',
-                            'attrs' => ['level' => 2],
-                            'content' => [['type' => 'text', 'text' => 'A Journey Through Time in Kyoto']]
-                        ],
-                        [
-                            'type' => 'paragraph',
-                            'content' => [['type' => 'text', 'text' => 'Kyoto, once the capital of Japan, is home to thousands of ancient temples and shrines. Walking through the bamboo groves of Arashiyama and visiting the iconic Fushimi Inari Shrine with its thousands of vermilion torii gates was a transformative experience.']]
-                        ],
-                        [
-                            'type' => 'paragraph',
-                            'content' => [['type' => 'text', 'text' => 'The city perfectly balances ancient traditions with modern convenience. I spent my mornings exploring temples like Kinkaku-ji (the Golden Pavilion) and my evenings enjoying matcha tea ceremonies and local cuisine in the Gion district.']]
-                        ],
-                        [
-                            'type' => 'heading',
-                            'attrs' => ['level' => 3],
-                            'content' => [['type' => 'text', 'text' => 'Must-Visit Temples']]
-                        ],
-                        [
-                            'type' => 'bulletList',
-                            'content' => [
-                                ['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Kiyomizu-dera Temple']]]]],
-                                ['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Fushimi Inari Shrine']]]]],
-                                ['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Kinkaku-ji (Golden Pavilion)']]]]],
-                                ['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Ryoan-ji Temple']]]]],
-                            ]
-                        ],
-                        [
-                            'type' => 'paragraph',
-                            'content' => [['type' => 'text', 'text' => 'The best time to visit Kyoto is during spring for cherry blossoms or fall for autumn colors, though the city has a unique beauty in every season.']]
-                        ],
-                    ],
-                ],
-            ],
-            [
-                'title' => 'Santorini: The Perfect Greek Island Getaway',
-                'lead' => 'Experience the magic of Santorini\'s dramatic cliffs, iconic white buildings, and breathtaking sunsets in this Mediterranean paradise.',
-                'date' => '2025-04-22',
-                'tags' => ['Beach', 'Luxury'],
-                'user_id' => 2,
-                'image_id' => $images[1]->id,
-                'content' => [
-                    'type' => 'doc',
-                    'content' => [
-                        [
-                            'type' => 'paragraph',
-                            'content' => [['type' => 'text', 'text' => 'With its iconic white-washed buildings and blue domes perched on dramatic cliffs overlooking the Aegean Sea, Santorini is the quintessential Greek island paradise.']]
-                        ],
-                        [
-                            'type' => 'heading',
-                            'attrs' => ['level' => 2],
-                            'content' => [['type' => 'text', 'text' => 'Island Magic']]
-                        ],
-                        [
-                            'type' => 'paragraph',
-                            'content' => [['type' => 'text', 'text' => 'The sunsets in Oia are legendary for a reason. Each evening, crowds gather along the western edge of the island to witness one of the most spectacular natural shows on earth as the sun dips below the horizon, painting the sky in shades of orange, pink, and purple.']]
-                        ],
-                        [
-                            'type' => 'paragraph',
-                            'content' => [['type' => 'text', 'text' => 'Beyond the stunning vistas, Santorini offers beautiful black and red sand beaches, fascinating archaeological sites like Ancient Thira, and some of the most unique wines in the world, grown in the island\'s volcanic soil.']]
-                        ],
-                        [
-                            'type' => 'heading',
-                            'attrs' => ['level' => 3],
-                            'content' => [['type' => 'text', 'text' => 'Highlights']]
-                        ],
-                        [
-                            'type' => 'paragraph',
-                            'content' => [['type' => 'text', 'text' => 'A catamaran cruise around the caldera, swimming in the hot springs, and dining on fresh seafood at a taverna overlooking the water are must-do experiences on this magical island.']]
-                        ],
-                    ],
-                ],
-            ],
-            [
-                'title' => 'Hiking the Inca Trail to Machu Picchu',
-                'lead' => 'Follow ancient pathways through cloud forests and mountain passes to discover the lost city of the Incas in this ultimate trekking adventure.',
-                'date' => '2025-01-18',
-                'tags' => ['Hiking', 'Adventure'],
-                'user_id' => 3,
-                'image_id' => $images[2]->id,
-                'content' => [
-                    'type' => 'doc',
-                    'content' => [
-                        [
-                            'type' => 'heading',
-                            'attrs' => ['level' => 2],
-                            'content' => [['type' => 'text', 'text' => 'The Journey of a Lifetime']]
-                        ],
-                        [
-                            'type' => 'paragraph',
-                            'content' => [['type' => 'text', 'text' => 'The classic four-day Inca Trail hike to Machu Picchu is one of the world\'s greatest trekking experiences. The trail winds through diverse landscapes, including cloud forests, alpine tundra, and stunning mountain passes, before culminating at the Sun Gate with your first glimpse of the lost city of the Incas.']]
-                        ],
-                        [
-                            'type' => 'paragraph',
-                            'content' => [['type' => 'text', 'text' => 'Along the way, you\'ll discover ancient Incan ruins that most visitors to Peru never see, camp under the stars in the Andes, and forge unforgettable bonds with your fellow trekkers and local guides.']]
-                        ],
-                        [
-                            'type' => 'heading',
-                            'attrs' => ['level' => 3],
-                            'content' => [['type' => 'text', 'text' => 'Preparation Tips']]
-                        ],
-                        [
-                            'type' => 'bulletList',
-                            'content' => [
-                                ['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Book permits at least 6 months in advance']]]]],
-                                ['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Spend at least 2-3 days in Cusco to acclimatize to the altitude']]]]],
-                                ['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Train with a loaded backpack and on stairs before your trip']]]]],
-                                ['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Pack layers - temperatures can vary dramatically']]]]],
-                            ]
-                        ],
-                        [
-                            'type' => 'paragraph',
-                            'content' => [['type' => 'text', 'text' => 'While challenging, completing the Inca Trail gives you a profound appreciation for the engineering genius of the Inca civilization and a deep connection to the sacred landscape of the Andes.']]
-                        ],
-                    ],
-                ],
-            ],
-            [
-                'title' => 'Road Trip Through Norway\'s Fjords',
-                'lead' => 'Navigate winding roads, tunnels and bridges to explore Norway\'s dramatic fjord landscapes, where towering cliffs meet pristine waters.',
-                'date' => '2025-02-10',
-                'tags' => ['Road Trip', 'Adventure'],
-                'user_id' => 1,
-                'image_id' => $images[3]->id,
-                'content' => [
-                    'type' => 'doc',
-                    'content' => [
-                        [
-                            'type' => 'paragraph',
-                            'content' => [['type' => 'text', 'text' => 'Norway\'s fjords offer some of the most dramatic landscapes on the planet. Deep, narrow inlets of water surrounded by towering cliffs and cascading waterfalls create a scene of unparalleled natural beauty.']]
-                        ],
-                        [
-                            'type' => 'heading',
-                            'attrs' => ['level' => 2],
-                            'content' => [['type' => 'text', 'text' => 'The Ultimate Scenic Drive']]
-                        ],
-                        [
-                            'type' => 'paragraph',
-                            'content' => [['type' => 'text', 'text' => 'Our two-week road trip began in Oslo and took us through the western fjords, including the UNESCO-listed Geirangerfjord and Nærøyfjord. The roads themselves are engineering marvels, winding along cliff edges, through mountain tunnels, and across dizzying bridges.']]
-                        ],
-                        [
-                            'type' => 'paragraph',
-                            'content' => [['type' => 'text', 'text' => 'Highlights included the hairpin turns of Trollstigen (the Troll\'s Path), the panoramic views from Dalsnibba viewpoint, and the wooden stave churches dating back to the Viking age.']]
-                        ],
-                        [
-                            'type' => 'heading',
-                            'attrs' => ['level' => 3],
-                            'content' => [['type' => 'text', 'text' => 'Best Fjords to Visit']]
-                        ],
-                        [
-                            'type' => 'bulletList',
-                            'content' => [
-                                ['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Geirangerfjord - Famous for Seven Sisters waterfall']]]]],
-                                ['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Sognefjord - Norway\'s longest and deepest fjord']]]]],
-                                ['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Hardangerfjord - Known for apple orchards and glaciers']]]]],
-                                ['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Lysefjord - Home to the famous Pulpit Rock']]]]],
-                            ]
-                        ],
-                        [
-                            'type' => 'paragraph',
-                            'content' => [['type' => 'text', 'text' => 'While summer offers the midnight sun and easier driving conditions, a winter visit provides a chance to see the northern lights dancing above the fjords - truly a magical experience.']]
-                        ],
-                    ],
-                ],
-            ],
-            [
-                'title' => 'A Weekend in New York City: The Ultimate Guide',
-                'lead' => 'Make the most of 72 hours in the Big Apple with this insider\'s guide to iconic landmarks, diverse neighborhoods, and unforgettable culinary experiences.',
-                'date' => '2025-05-01',
-                'tags' => ['City Break', 'Food'],
-                'user_id' => 2,
-                'image_id' => $images[4]->id,
-                'content' => [
-                    'type' => 'doc',
-                    'content' => [
-                        [
-                            'type' => 'heading',
-                            'attrs' => ['level' => 2],
-                            'content' => [['type' => 'text', 'text' => 'The City That Never Sleeps']]
-                        ],
-                        [
-                            'type' => 'paragraph',
-                            'content' => [['type' => 'text', 'text' => 'New York City packs more into a few square miles than most entire countries. From world-class museums and Broadway shows to iconic landmarks and diverse neighborhoods, the city offers an overwhelming array of experiences.']]
-                        ],
-                        [
-                            'type' => 'paragraph',
-                            'content' => [['type' => 'text', 'text' => 'My 72-hour whirlwind tour included sunrise at the Empire State Building, a morning walk through Central Park, afternoon exploring the Metropolitan Museum of Art, and evenings enjoying the city\'s legendary dining and nightlife scenes.']]
-                        ],
-                        [
-                            'type' => 'heading',
-                            'attrs' => ['level' => 3],
-                            'content' => [['type' => 'text', 'text' => 'Must-Visit Neighborhoods']]
-                        ],
-                        [
-                            'type' => 'bulletList',
-                            'content' => [
-                                ['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Greenwich Village - For bohemian charm and jazz clubs']]]]],
-                                ['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Williamsburg - For hipster vibes and artisanal everything']]]]],
-                                ['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Chinatown & Little Italy - For cultural immersion and incredible food']]]]],
-                                ['type' => 'listItem', 'content' => [['type' => 'paragraph', 'content' => [['type' => 'text', 'text' => 'Upper East Side - For museums and upscale shopping']]]]],
-                            ]
-                        ],
-                        [
-                            'type' => 'paragraph',
-                            'content' => [['type' => 'text', 'text' => 'The subway is your best friend for getting around quickly and authentically. Purchase a MetroCard and experience the city like a true New Yorker, complete with memorable encounters with street performers, buskers, and the city\'s famously direct inhabitants.']]
-                        ],
-                        [
-                            'type' => 'heading',
-                            'attrs' => ['level' => 3],
-                            'content' => [['type' => 'text', 'text' => 'Food Highlights']]
-                        ],
-                        [
-                            'type' => 'paragraph',
-                            'content' => [['type' => 'text', 'text' => 'From dollar pizza slices and halal food carts to Michelin-starred restaurants, New York\'s food scene is unparalleled. Don\'t miss a classic bagel with lox, dim sum in Chinatown, and a pastrami sandwich from Katz\'s Deli.']]
-                        ],
-                    ],
-                ],
-            ],
+        $articlesForUser1 = [
+            ['title' => 'Exploring Ancient Temples in Kyoto', 'lead' => 'A journey through Japan\'s historic capital reveals timeless beauty and spiritual wonder.', 'date' => '2025-03-15', 'tags' => ['Culture', 'City Break'], 'image_index' => 0],
+            ['title' => 'Santorini: The Perfect Greek Island Getaway', 'lead' => 'Experience the magic of Santorini\'s dramatic cliffs and breathtaking sunsets.', 'date' => '2025-04-22', 'tags' => ['Beach', 'Luxury'], 'image_index' => 1],
+            ['title' => 'Hiking the Inca Trail to Machu Picchu', 'lead' => 'Follow ancient pathways through cloud forests to discover the lost city of the Incas.', 'date' => '2025-01-18', 'tags' => ['Hiking', 'Adventure'], 'image_index' => 2],
+            ['title' => 'Road Trip Through Norway\'s Fjords', 'lead' => 'Navigate winding roads to explore Norway\'s dramatic fjord landscapes.', 'date' => '2025-02-10', 'tags' => ['Road Trip', 'Adventure'], 'image_index' => 3],
+            ['title' => 'A Weekend in New York City: The Ultimate Guide', 'lead' => 'Make the most of 72 hours in the Big Apple with iconic landmarks and culinary experiences.', 'date' => '2025-05-01', 'tags' => ['City Break', 'Food'], 'image_index' => 4],
+            ['title' => 'Tokyo Street Food Adventure', 'lead' => 'Discover the incredible world of Japanese street food in Tokyo\'s bustling neighborhoods.', 'date' => '2025-03-20', 'tags' => ['Food', 'City Break'], 'image_index' => 5],
+            ['title' => 'Swiss Alps: A Photographer\'s Paradise', 'lead' => 'Capture stunning mountain vistas and pristine alpine lakes in Switzerland.', 'date' => '2025-04-05', 'tags' => ['Photography', 'Mountains'], 'image_index' => 6],
+            ['title' => 'Bali Beach Hopping Guide', 'lead' => 'From hidden coves to famous surf breaks, explore Bali\'s diverse coastline.', 'date' => '2025-02-28', 'tags' => ['Beach', 'Islands'], 'image_index' => 7],
+            ['title' => 'Iceland\'s Ring Road: Complete Travel Guide', 'lead' => 'Drive around Iceland to witness geysers, glaciers, and the Northern Lights.', 'date' => '2025-01-25', 'tags' => ['Road Trip', 'Adventure'], 'image_index' => 8],
+            ['title' => 'Dubai: Where Tradition Meets Luxury', 'lead' => 'Experience the perfect blend of Arabian culture and modern extravagance.', 'date' => '2025-03-08', 'tags' => ['Luxury', 'City Break'], 'image_index' => 9],
+            ['title' => 'Backpacking Through Southeast Asia', 'lead' => 'A budget traveler\'s guide to exploring Thailand, Vietnam, and Cambodia.', 'date' => '2025-02-14', 'tags' => ['Backpacking', 'Adventure'], 'image_index' => 10],
+            ['title' => 'Canadian Rockies Camping Experience', 'lead' => 'Sleep under the stars in Banff and Jasper National Parks.', 'date' => '2025-04-18', 'tags' => ['Camping', 'Mountains'], 'image_index' => 11],
+            ['title' => 'Safari in Kenya: Wildlife Photography Tips', 'lead' => 'Capture the Big Five and witness the Great Migration in the Maasai Mara.', 'date' => '2025-01-30', 'tags' => ['Wildlife', 'Photography'], 'image_index' => 12],
+            ['title' => 'Morocco Desert Adventure', 'lead' => 'Camel trekking and overnight camping in the Sahara Desert.', 'date' => '2025-03-12', 'tags' => ['Desert', 'Adventure'], 'image_index' => 13],
+            ['title' => 'New Zealand South Island Road Trip', 'lead' => 'Epic landscapes and adrenaline activities in Middle Earth.', 'date' => '2025-04-25', 'tags' => ['Road Trip', 'Adventure'], 'image_index' => 14],
+            ['title' => 'Italian Riviera: Cinque Terre Hiking', 'lead' => 'Walk coastal trails connecting five colorful fishing villages.', 'date' => '2025-02-20', 'tags' => ['Hiking', 'Culture'], 'image_index' => 15],
+            ['title' => 'Maldives: Ultimate Luxury Resort Guide', 'lead' => 'Overwater bungalows and pristine beaches in tropical paradise.', 'date' => '2025-03-28', 'tags' => ['Luxury', 'Beach'], 'image_index' => 16],
+            ['title' => 'Scottish Highlands Castle Tour', 'lead' => 'Explore ancient castles and dramatic landscapes in Scotland.', 'date' => '2025-01-22', 'tags' => ['Culture', 'Road Trip'], 'image_index' => 17],
+            ['title' => 'Costa Rica Wildlife Adventure', 'lead' => 'Zip-lining through cloud forests and spotting exotic animals.', 'date' => '2025-04-08', 'tags' => ['Wildlife', 'Adventure'], 'image_index' => 18],
+            ['title' => 'Australian Outback Expedition', 'lead' => 'Experience the raw beauty of Australia\'s red center and Uluru.', 'date' => '2025-02-05', 'tags' => ['Desert', 'Adventure'], 'image_index' => 19],
+            ['title' => 'Paris Food Walking Tour', 'lead' => 'Taste your way through the City of Light\'s best neighborhoods.', 'date' => '2025-03-18', 'tags' => ['Food', 'City Break'], 'image_index' => 20],
+            ['title' => 'Patagonia Trekking Guide', 'lead' => 'Multi-day hikes through Chile and Argentina\'s pristine wilderness.', 'date' => '2025-01-28', 'tags' => ['Hiking', 'Mountains'], 'image_index' => 21],
+            ['title' => 'Vietnam Motorbike Journey', 'lead' => 'Two weeks exploring Vietnam from north to south on a motorbike.', 'date' => '2025-04-12', 'tags' => ['Road Trip', 'Backpacking'], 'image_index' => 22],
+            ['title' => 'Seychelles Island Paradise', 'lead' => 'Crystal clear waters and pristine beaches in the Indian Ocean.', 'date' => '2025-02-25', 'tags' => ['Beach', 'Islands'], 'image_index' => 23],
+            ['title' => 'Nepal Everest Base Camp Trek', 'lead' => 'Journey to the base of the world\'s highest mountain.', 'date' => '2025-03-22', 'tags' => ['Hiking', 'Mountains'], 'image_index' => 24],
+            ['title' => 'Russian Trans-Siberian Railway', 'lead' => 'Epic train journey across the world\'s largest country.', 'date' => '2025-04-15', 'tags' => ['Culture', 'Adventure'], 'image_index' => 25],
+            ['title' => 'Jordan: Petra and Wadi Rum Adventure', 'lead' => 'Ancient cities and desert landscapes in the Middle East.', 'date' => '2025-01-15', 'tags' => ['Culture', 'Desert'], 'image_index' => 26],
+            ['title' => 'Croatian Island Hopping', 'lead' => 'Sail the Adriatic and discover hidden coves and historic towns.', 'date' => '2025-03-25', 'tags' => ['Islands', 'Beach'], 'image_index' => 27],
         ];
 
-        // Create the articles
-        foreach ($articles as $articleData) {
-            // Format date and create slug
+        // Create articles for User 1
+        foreach ($articlesForUser1 as $articleData) {
             $date = $articleData['date'];
             $title = $articleData['title'];
             $slug = $date . '-' . Str::slug($title);
 
-            // Create the article
             $article = Article::create([
                 'title' => $title,
                 'lead' => $articleData['lead'],
                 'slug' => $slug,
-                'content' => json_encode($articleData['content']),
-                'user_id' => $articleData['user_id'],
-                'image_id' => $articleData['image_id'],
+                'content' => json_encode([
+                    'type' => 'doc',
+                    'content' => [
+                        [
+                            'type' => 'paragraph',
+                            'content' => [['type' => 'text', 'text' => $articleData['lead'] . ' This is sample content for testing pagination and article display.']]
+                        ]
+                    ]
+                ]),
+                'user_id' => 1, // All articles for user 1
+                'image_id' => $images[$articleData['image_index']]->id,
             ]);
 
             // Attach tags
             foreach ($articleData['tags'] as $tagName) {
-                $article->tags()->attach($tags[$tagName]->id);
+                if (isset($tags[$tagName])) {
+                    $article->tags()->attach($tags[$tagName]->id);
+                }
+            }
+        }
+
+        // A few articles for other users
+        $otherArticles = [
+            ['title' => 'Brazilian Carnival Experience', 'lead' => 'Samba, music, and vibrant culture in Rio de Janeiro.', 'date' => '2025-03-05', 'tags' => ['Culture', 'City Break'], 'user_id' => 2, 'image_index' => 28],
+            ['title' => 'Antarctic Expedition Cruise', 'lead' => 'Wildlife encounters at the bottom of the world.', 'date' => '2025-02-18', 'tags' => ['Wildlife', 'Adventure'], 'user_id' => 3, 'image_index' => 29],
+        ];
+
+        foreach ($otherArticles as $articleData) {
+            $date = $articleData['date'];
+            $title = $articleData['title'];
+            $slug = $date . '-' . Str::slug($title);
+
+            $article = Article::create([
+                'title' => $title,
+                'lead' => $articleData['lead'],
+                'slug' => $slug,
+                'content' => json_encode([
+                    'type' => 'doc',
+                    'content' => [
+                        [
+                            'type' => 'paragraph',
+                            'content' => [['type' => 'text', 'text' => $articleData['lead']]]
+                        ]
+                    ]
+                ]),
+                'user_id' => $articleData['user_id'],
+                'image_id' => $images[$articleData['image_index']]->id,
+            ]);
+
+            foreach ($articleData['tags'] as $tagName) {
+                if (isset($tags[$tagName])) {
+                    $article->tags()->attach($tags[$tagName]->id);
+                }
             }
         }
 
@@ -345,14 +206,9 @@ class DatabaseSeeder extends Seeder
         $comments = [
             ['content' => 'Great article! I visited Kyoto last year and it was incredible.', 'article_id' => 1, 'user_id' => 2],
             ['content' => 'The Fushimi Inari Shrine was my favorite part of Kyoto.', 'article_id' => 1, 'user_id' => 3],
-            ['content' => 'Santorini is on my bucket list. The photos look amazing!', 'article_id' => 2, 'user_id' => 1],
-            ['content' => 'Did you try the local wines in Santorini? Any recommendations?', 'article_id' => 2, 'user_id' => 3],
-            ['content' => 'How difficult was the Inca Trail? I\'m planning to go next year.', 'article_id' => 3, 'user_id' => 1],
-            ['content' => 'Make sure to book your permits way in advance for the Inca Trail!', 'article_id' => 3, 'user_id' => 2],
-            ['content' => 'Norway is absolutely stunning. Did you see the Northern Lights?', 'article_id' => 4, 'user_id' => 3],
-            ['content' => 'What was the driving like on those narrow Norwegian roads?', 'article_id' => 4, 'user_id' => 2],
-            ['content' => 'I lived in NYC for 5 years and still never saw everything. Great guide!', 'article_id' => 5, 'user_id' => 1],
-            ['content' => 'Don\'t forget to check out the High Line and Chelsea Market in NYC!', 'article_id' => 5, 'user_id' => 3],
+            ['content' => 'Santorini is on my bucket list. The photos look amazing!', 'article_id' => 2, 'user_id' => 2],
+            ['content' => 'Amazing content! Keep up the great work.', 'article_id' => 3, 'user_id' => 3],
+            ['content' => 'This makes me want to travel right now!', 'article_id' => 4, 'user_id' => 2],
         ];
 
         foreach ($comments as $commentData) {

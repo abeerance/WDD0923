@@ -66,6 +66,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         // on initial login, checks if a user object exists
         // here we transfer our custom properties from user to the JWT token which is in-built in auth.js
+        token.id = user.id;
         token.accessToken = user.accessToken;
         token.username = user.username;
       }
@@ -77,6 +78,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }: { session: Session; token: JWT }) {
       // here we transfer our custom properties from the previously created JWT token to the in-built session object of auth.js, which will be stored in the browser localStorage (cookies)
       // this is what your app will receive when calling useSession() or auth()
+      if (session.user) {
+        session.user.id = token.id as string;
+      }
       session.accessToken = token.accessToken;
       session.username = token.username;
 

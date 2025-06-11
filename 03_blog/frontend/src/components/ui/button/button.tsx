@@ -36,7 +36,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           variant === "secondary" &&
             "bg-amber-700/90 hover:bg-amber-700/75 text-gray-100 px-xs py-2xs",
           variant === "ghost" && "text-gray-900 underline",
-          variant === "destructive" && "bg-red-500 text-gray-100 px-xs py-2xs",
+          variant === "destructive" &&
+            "bg-red-500/90 text-gray-100 px-xs py-2xs hover:bg-red-700/90",
           leftSection && "gap-2xs pr-m pl-2xs",
           rightSection && "pl-m gap-2xs pr-2xs",
           className
