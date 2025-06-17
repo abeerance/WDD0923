@@ -55,6 +55,7 @@ class ArticlesController
     }
 
     // Create a new article
+// Update the create method in ArticlesController
     public function create(Request $request)
     {
         // Validate request data
@@ -63,6 +64,8 @@ class ArticlesController
             'lead' => 'required|string|max:500',
             'content' => 'required|array',
             'image_id' => 'nullable|integer|exists:images,id',
+            'tags' => 'required|array|min:1', // Add tags validation
+            'tags.*' => 'string|max:255', // Each tag should be a string
         ]);
 
         // Convert content to JSON
@@ -77,13 +80,46 @@ class ArticlesController
         $slug = $this->generateDateSlug($validatedData['title']);
         $validatedData['slug'] = $slug;
 
+        // Remove tags from validated data before creating article
+        $tags = $validatedData['tags'];
+        unset($validatedData['tags']);
+
         // Create the article
         $article = Auth::user()->articles()->create($validatedData);
+
+        // Handle tags - create/find and attach them
+        $this->attachTagsToArticle($article, $tags);
+
+        // Load the article with its relationships for the response
+        $article->load(['tags', 'coverImage']);
 
         return response()->json(['article' => $article], 201);
     }
 
+    /**
+     * Helper method to attach tags to an article
+     * Creates new tags if they don't exist, then attaches them to the article
+     */
+    private function attachTagsToArticle($article, array $tagNames): void
+    {
+        $tagIds = [];
+
+        foreach ($tagNames as $tagName) {
+            // Find or create the tag
+            $tag = \App\Models\Tag::firstOrCreate(
+                ['name' => $tagName],
+                ['name' => $tagName]
+            );
+
+            $tagIds[] = $tag->id;
+        }
+
+        // Attach tags to the article (assuming you have a pivot table)
+        $article->tags()->sync($tagIds);
+    }
+
     // Update an existing article
+// Update an existing article
     public function update(Request $request, $id)
     {
         $article = Auth::user()->articles()->findOrFail($id);
@@ -91,9 +127,11 @@ class ArticlesController
         // Validate request data
         $validatedData = $request->validate([
             'title' => 'sometimes|string|max:255',
-            'lead' => 'sometimes|string|max:500', // Add validation for lead field
+            'lead' => 'sometimes|string|max:500',
             'content' => 'sometimes|array',
-            'image_id' => 'nullable|integer|exists:images,id',
+            'image_id' => 'nullable|integer|exists:images,id', // Add image_id validation
+            'tags' => 'sometimes|array|min:1', // Add tags validation
+            'tags.*' => 'string|max:255', // Each tag should be a string
         ]);
 
         // Convert content to JSON if provided
@@ -111,8 +149,20 @@ class ArticlesController
             $validatedData['slug'] = $this->generateDateSlug($validatedData['title']);
         }
 
+        // Handle tags if provided
+        if (isset($validatedData['tags'])) {
+            $tags = $validatedData['tags'];
+            unset($validatedData['tags']); // Remove tags from validated data before updating article
+
+            // Update tags
+            $this->attachTagsToArticle($article, $tags);
+        }
+
         // Update the article
         $article->update($validatedData);
+
+        // Load the article with its relationships for the response
+        $article->load(['tags', 'coverImage']);
 
         return response()->json(['article' => $article], 200);
     }

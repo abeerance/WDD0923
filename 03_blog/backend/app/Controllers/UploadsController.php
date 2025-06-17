@@ -61,9 +61,11 @@ class UploadsController
             $fullUrl = url(Storage::url($pathname));
 
             // Create image record in the database
+            // In the create method, update the alt_text assignment:
+            // Create image record in the database
             $image = Image::create([
-                'url' => $fullUrl,  // Store full HTTP URL
-                'alt_text' => $request->post('title'),
+                'url' => $fullUrl,
+                'name' => $request->post('title') ?: $originalFilename, // Use 'name' column, not 'alt_text'
                 'user_id' => $user->id,
                 'article_id' => $type === 'article' && isset($validatedData['article_id']) ? $validatedData['article_id'] : null,
             ]);
