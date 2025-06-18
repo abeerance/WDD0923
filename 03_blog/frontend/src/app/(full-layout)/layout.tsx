@@ -7,9 +7,9 @@ interface HomeLayoutProps {
 
 export default function HomeLayout({ children }: HomeLayoutProps) {
   return (
-    <main>
+    <main className="w-full h-svh flex flex-col">
       <Header />
-      {children}
+      <div className="w-full flex-1">{children}</div>
     </main>
   );
 }

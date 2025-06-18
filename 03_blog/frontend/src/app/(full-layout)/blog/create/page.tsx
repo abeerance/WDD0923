@@ -18,8 +18,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-// TODO: Image upload functionality - will be implemented next week
-// import { uploadImageAction } from "@/actions/upload-image/upload-iamge-action";
+import { uploadImageAction } from "@/actions/upload-image/upload-image-action";
 
 // Predefined list of available tags for blog categorization
 // Users can select multiple tags to categorize their blog posts
@@ -49,21 +48,19 @@ const createBlogSchema = z.object({
   // Use a more flexible schema that matches Tiptap's JSONContent type
   content: z.record(z.unknown()), // Accept any valid JSON object structure from Tiptap
   tags: z.array(z.string()).min(1, "At least one tag is required"), // Array of selected tags
-  // TODO: Image upload - will be enabled next week
-  // image: z.instanceof(File).optional(), // Optional cover image file
+  image: z.instanceof(File).optional(), // Optional cover image file
 });
 
 // TypeScript type inference from Zod schema
 // Ensures type safety for form data throughout the component
 type CreateBlogFormData = z.infer<typeof createBlogSchema>;
 
-// TODO: Image upload interface - will be used next week
 // Interface defining the structure of uploaded image data returned from server
-// interface UploadedImage {
-//   id: number;
-//   name: string;
-//   url: string;
-// }
+interface UploadedImage {
+  id: number;
+  name: string;
+  url: string;
+}
 
 /**
  * Main component for creating new blog posts
@@ -79,11 +76,10 @@ export default function CreateBlogPage() {
   // State for managing selected image file before upload
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  // TODO: Image upload states - will be implemented next week
   // State for storing uploaded image data after successful upload
-  // const [uploadedImage, setUploadedImage] = useState<UploadedImage | null>(null);
+  const [uploadedImage, setUploadedImage] = useState<UploadedImage | null>(null);
   // State for tracking upload progress/loading state
-  // const [isUploading, setIsUploading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   // Initialize Tiptap rich text editor
   // Provides WYSIWYG editing capabilities with StarterKit extensions
@@ -105,10 +101,10 @@ export default function CreateBlogPage() {
     resolver: zodResolver(createBlogSchema), // Use Zod schema for validation
     mode: "onSubmit", // Validate only on form submission
     defaultValues: {
-      title: "",
-      lead: "",
+      title: "", // initialize title as empty string
+      lead: "", // initialize lead as empty string
       content: {}, // Initialize with empty object
-      tags: [],
+      tags: [], // Initialize tags as empty array
     },
   });
 
@@ -153,17 +149,18 @@ export default function CreateBlogPage() {
     );
   };
 
-  // TODO: Image upload handlers - will be implemented next week
   /**
    * Handles file selection from file input
    * Updates selectedFile state and form image field
    */
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // this is needed so we have access to the file, which is embedded in an input
     const file = event.target.files?.[0];
     if (file) {
+      // sets the state of the selected file
       setSelectedFile(file);
-      // TODO: Uncomment when image upload is implemented
-      // form.setValue("image", file);
+      // set the state of the form for the selected file
+      form.setValue("image", file);
     }
   };
 
@@ -173,85 +170,98 @@ export default function CreateBlogPage() {
    * @param file - The image file to upload
    * @returns Promise resolving to uploaded image data or null on failure
    */
-  // const handleImageUpload = async (file: File): Promise<UploadedImage | null> => {
-  //   console.log("Starting image upload...");
-  //   setIsUploading(true);
+  const handleImageUpload = async (file: File): Promise<UploadedImage | null> => {
+    // set uploading state as true
+    setIsUploading(true);
 
-  //   try {
-  //     // Create FormData for multipart file upload
-  //     const formData = new FormData();
-  //     formData.append("files[]", file);
-  //     formData.append("type", "cover"); // Specify this is a cover image
-  //     formData.append("title", file.name);
+    try {
+      // Create FormData with explicit array structure
+      // this is needed, because we are sending a new formdata to the nextjs server. Whenever you are trying to upload an image, you will need a formdata
+      const formData = new FormData();
+      formData.append("files", file);
+      formData.append("type", "article");
+      formData.append("title", form.getValues("title"));
 
-  //     console.log("Calling uploadImageAction...");
-  //     const result = await uploadImageAction(formData);
-  //     console.log("Upload result:", result);
+      // here we call the upload image server action
+      const result = await uploadImageAction(formData);
 
-  //     if (result.success && result.image) {
-  //       setUploadedImage(result.image);
-  //       toast.success("Image uploaded successfully!");
-  //       return result.image;
-  //     } else {
-  //       console.error("Upload failed:", result.error);
-  //       toast.error(result.error || "Upload failed");
-  //       return null;
-  //     }
-  //   } catch (error) {
-  //     console.error("Upload error:", error);
-  //     toast.error(error instanceof Error ? error.message : "Failed to upload image");
-  //     return null;
-  //   } finally {
-  //     console.log("Setting isUploading to false");
-  //     setIsUploading(false);
-  //   }
-  // };
+      // if server action successfull, we have the result, as well as the image object
+      if (result.success && result.image) {
+        // set the image object as the state for uploadedImage variable
+        setUploadedImage(result.image);
+        return result.image;
+      } else {
+        toast.error(result.error || "Upload failed");
+        // since we always want an image for a blog article, we enforce an early return of the function, so that it does not post an incorrect blog article to the backend
+        return null;
+      }
+    } catch (error) {
+      // since we always want an image for a blog article, we enforce an early return of the function, so that it does not post an incorrect blog article to the backend
+      toast.error(error instanceof Error ? error.message : "Failed to upload image");
+      return null;
+    } finally {
+      // here we set isUploading to false again, so that we are not in an endless isUploading true loop. The finally will always be executed in a try/catch, wether if it is successful or not
+      setIsUploading(false);
+    }
+  };
 
   /**
-   * Form submission handler
-   * Processes form data, handles image upload (when enabled), and creates blog post
-   * @param data - Validated form data from react-hook-form
+   * Form submission handler for creating blog articles
+   *
+   * This function orchestrates the complete blog creation process:
+   * 1. Validates that the editor is properly initialized
+   * 2. Conditionally uploads a new image if the user selected one => we always expect an image
+   * 3. Prepares the update data with the new image id. That way we can ensure that every blog has an image.
+   * 4. Calls the backend API to create the blog article with the whole form, including the newly created image id as reference
+   * 5. Handles success/error responses and navigation
+   *
+   * @param formData - Validated form data from react-hook-form containing title, lead, content, tags, and optional image
    */
   const onSubmit = async (data: CreateBlogFormData) => {
     try {
-      // Ensure editor is initialized before proceeding
       if (!editor) {
         toast.error("Editor not initialized");
         return;
       }
 
-      // TODO: Image upload logic - will be implemented next week
-      // let imageId: number | undefined;
+      // Image upload is now required - don't proceed without it
+      if (!selectedFile) {
+        toast.error("Please select an image before creating the blog");
+        return;
+      }
 
-      // Upload image if selected (when image upload is enabled)
-      // if (selectedFile) {
-      //   const uploadResult = await handleImageUpload(selectedFile);
-      //   imageId = uploadResult?.id;
-      // }
+      // Upload image first - this is now a blocking operation
+      const uploadResult = await handleImageUpload(selectedFile);
+      if (!uploadResult) {
+        // Error toast is already shown in handleImageUpload
+        return; // Stop completely if upload failed
+      }
 
-      // Prepare data for blog creation action
+      // at this point we already ensured that the uploadResult was successfull
+      // so we can access the id of the result and save it into a new imageId variable
+      const imageId = uploadResult.id;
+
+      // Only proceed with blog creation if image upload was successful
       const formData = {
         title: data.title,
         lead: data.lead,
-        content: data.content as { type: "doc"; content?: Record<string, unknown>[] }, // Cast to match server action type
+        content: data.content as { type: "doc"; content?: Record<string, unknown>[] },
         tags: selectedTags,
-        // TODO: Include image_id when image upload is implemented
-        // image_id: imageId,
+        image_id: imageId,
       };
 
-      // Call server action to create blog post
+      // here we call the create blog server action
       const result = await createBlogAction(formData);
 
       if (result.success) {
-        // Show success message and redirect to dashboard
+        // Only show success toast when blog is actually created
         toast.success("Blog article created successfully!");
+        // after a successful upload we route the user automatically to their dashboard
         router.push("/dashboard");
       } else {
-        // Show error message if creation failed
         toast.error(result.error || "Failed to create blog article");
       }
     } catch (error) {
-      // Handle any unexpected errors during submission
       console.error("Error creating blog:", error);
       toast.error("An error occurred while creating the blog article");
     }
@@ -294,28 +304,27 @@ export default function CreateBlogPage() {
             />
           </GridItem>
 
-          {/* Image Upload Section - selection enabled, upload disabled until next week */}
+          {/* Image Upload Section */}
           <GridItem span={12}>
             <div className="space-y-4">
               <label className="block text-sm font-medium">Cover Image</label>
-              {!selectedFile ? (
+              {!selectedFile && !uploadedImage ? (
                 // File selection input when no file is selected
                 <div className="flex items-center space-x-4">
                   <input
                     type="file"
                     accept="image/*" // Only accept image files
                     onChange={handleFileSelect}
-                    // TODO: Remove disabled when upload is implemented
-                    // disabled={isUploading}
+                    disabled={isUploading}
                     className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                   />
                 </div>
               ) : (
-                // Image preview with remove button when file is selected
+                // Image preview with remove button when file is selected or uploaded
                 <div className="space-y-3">
                   <div className="relative w-full aspect-video rounded-md overflow-hidden">
                     <Image
-                      src={URL.createObjectURL(selectedFile)} // Create preview URL from file
+                      src={uploadedImage ? uploadedImage.url : URL.createObjectURL(selectedFile!)} // Show uploaded image URL or local preview
                       alt="Preview"
                       fill
                       style={{ objectFit: "cover" }}
@@ -323,10 +332,10 @@ export default function CreateBlogPage() {
                     <button
                       type="button"
                       onClick={() => {
-                        // Remove selected file and clear form field
+                        // Remove selected file and uploaded image, clear form field
                         setSelectedFile(null);
-                        // TODO: Uncomment when image upload is implemented
-                        // form.setValue("image", undefined);
+                        setUploadedImage(null);
+                        form.setValue("image", undefined);
                       }}
                       className="absolute top-4 right-4 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-lg hover:bg-red-600 transition-colors"
                     >
@@ -457,11 +466,9 @@ export default function CreateBlogPage() {
             {/* Submit button - creates the blog post */}
             <Button
               type="submit"
-              label="Create Wandrstay" // Simplified label since image upload is disabled
+              label="Create Wandrstay"
               textVariant="body-small"
-              disabled={form.formState.isSubmitting} // Disable during form submission
-              // TODO: Add isUploading to disabled condition when image upload is implemented
-              // disabled={form.formState.isSubmitting || isUploading}
+              disabled={form.formState.isSubmitting || isUploading}
             />
           </GridItem>
         </Grid>
