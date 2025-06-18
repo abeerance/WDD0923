@@ -8,6 +8,7 @@ import { MenuButton } from "../menu-button/menu-button";
 import { MenuItem } from "../menu-item/menu-item";
 import { MenuSeperator } from "../menu-seperator/menu-seperator";
 import { Logout } from "../logout/logout";
+import { Dashboard } from "../dashboard/dashboard";
 
 export const DropdownNav = () => {
   return (
@@ -22,6 +23,7 @@ export const DropdownNav = () => {
           sideOffset={16}
         >
           <MenuItem href="/about" title="About" description="Find out more" />
+          <Dashboard />
           <MenuSeperator />
           <Logout />
         </DropdownMenuContent>

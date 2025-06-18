@@ -1,4 +1,6 @@
+import { auth } from "@/auth";
 import { BackButton } from "@/components/back-button/back-button";
+import { NavLink } from "@/components/nav-link/nav-link";
 import { Grid, GridItem } from "@/components/ui/grid/grid";
 import { ImageContainer } from "@/components/ui/image/image";
 import { Tag } from "@/components/ui/tag/tag";
@@ -20,6 +22,8 @@ export default async function BlogPage({ params }: BlogPageProps) {
   const response = await fetchApi<PaginatedArticlesResponse>(`articles?slug=${slug}`);
   // fetch request for the user which created the article
   const userResponse = await fetchApi<PublicUser>(`users?id=${response.data?.data[0].user_id}`);
+  // get user session
+  const session = await auth();
 
   if (!response.data || response.data.data.length === 0 || !userResponse.data) {
     notFound();
@@ -29,6 +33,10 @@ export default async function BlogPage({ params }: BlogPageProps) {
   const { title, lead, content, tags, cover_image, created_at } = response.data.data[0];
   // destructure username from userResponse
   const { username } = userResponse.data;
+  // destructure userId from userResponse => this is the userId from the user that created the blog
+  const { id } = userResponse.data;
+  // save the session userId into a variable from the currently logged on user
+  const sessionUserId = session?.user?.id;
 
   return (
     <Grid className="py-2xl flex flex-col gap-l">
@@ -43,7 +51,18 @@ export default async function BlogPage({ params }: BlogPageProps) {
               {format(new Date(created_at), "MMMM d, yyyy")}
             </Text>
           </div>
-          <BackButton />
+          <div className="flex gap-xs">
+            {id.toString() === sessionUserId && (
+              <NavLink
+                href={`/blog/edit/${slug}`}
+                textVariant="label-small"
+                className="bg-gray-600 px-m py-2xs rounded-full text-white/90 hover:bg-cyan-900/75"
+              >
+                Edit
+              </NavLink>
+            )}
+            <BackButton />
+          </div>
         </div>
         <Text className="mt-m">{lead}</Text>
       </GridItem>
